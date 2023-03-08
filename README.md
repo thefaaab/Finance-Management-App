@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-<img src="[https://github.com/favicon.ico](https://github.com/thefaaab/finance_app/blob/master/screenshots/screenshot_1.png)" width="300">
+<img src="https://github.com/thefaaab/finance_app/blob/master/screenshots/screenshot_1.png" width="300">
