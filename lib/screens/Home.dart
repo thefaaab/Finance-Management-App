@@ -69,9 +69,7 @@ class Home extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: geter()[index].buy!
-                            ? const Color.fromARGB(255, 174, 12, 0)
-                            : const Color.fromARGB(255, 40, 125, 43),
+                        color: geter()[index].buy! ? Colors.red : Colors.green,
                       ),
                     ),
                   );
@@ -94,10 +92,12 @@ class Home extends StatelessWidget {
               width: double.infinity,
               height: 220,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 204, 255, 205),
-                  Color.fromARGB(255, 169, 216, 255)
-                ]),
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 204, 255, 205),
+                    Color.fromARGB(255, 169, 216, 255)
+                  ],
+                ),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -130,14 +130,14 @@ class Home extends StatelessWidget {
                           "Good Morning",
                           style: GoogleFonts.poppins(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 0, 0, 0)),
+                              color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
                         Text(
                           "Febinnas",
                           style: GoogleFonts.poppins(
                               fontSize: 30,
                               fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 0, 0, 0)),
+                              color: const Color.fromARGB(255, 0, 0, 0)),
                         )
                       ],
                     ),
