@@ -18,13 +18,14 @@ class _ChartState extends State<Chart> {
           primaryXAxis: CategoryAxis(),
           series: <SplineSeries<SalesData, String>>[
             SplineSeries<SalesData, String>(
-              color: Colors.black,
+              color: const Color(0xFF008172),
+              width: 3,
               dataSource: <SalesData>[
                 SalesData(100, 'Mon'),
                 SalesData(20, 'Tue'),
-                SalesData(40, 'Wed'),
+                SalesData(70, 'Wed'),
                 SalesData(15, 'Sat'),
-                SalesData(5, 'Sun'),
+                SalesData(25, 'Sun'),
               ],
               xValueMapper: (SalesData sales, _) => sales.year,
               yValueMapper: (SalesData sales, _) => sales.sales,

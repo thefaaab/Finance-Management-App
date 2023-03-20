@@ -1,6 +1,7 @@
 import 'package:finance_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:finance_app/data/top.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _StatisticsState extends State<Statistics> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Text(
                     'Statistics',
@@ -62,7 +63,8 @@ class _StatisticsState extends State<Statistics> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: indexColor == index
-                                        ? Colors.white
+                                        ? const Color.fromARGB(
+                                            255, 255, 255, 255)
                                         : Colors.black),
                               ),
                             ),
@@ -87,18 +89,19 @@ class _StatisticsState extends State<Statistics> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
                                 'Expense',
                                 style: GoogleFonts.poppins(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.grey),
                               ),
                               const Icon(
                                 Icons.arrow_downward_sharp,
                                 color: Colors.grey,
+                                size: 20,
                               ),
                             ],
                           ),
@@ -106,9 +109,67 @@ class _StatisticsState extends State<Statistics> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Chart()
+                  const SizedBox(height: 30),
+                  const Chart(),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Top Spendings',
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        const Icon(
+                          Icons.swap_vert,
+                          size: 25,
+                          color: Color(0xFF008172),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  )
                 ],
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return ListTile(
+                    leading: Image.asset(
+                      'assets/images/${geterTop()[index].image!}',
+                      height: 40,
+                    ),
+                    title: Text(
+                      geterTop()[index].name!,
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                    subtitle: Text(
+                      geterTop()[index].time!,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
+                    trailing: Text(
+                      geterTop()[index].fee!,
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                  );
+                },
+                childCount: geterTop().length,
               ),
             ),
           ],
