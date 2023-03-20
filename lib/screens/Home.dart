@@ -1,83 +1,120 @@
 import 'package:finance_app/data/listData.dart';
+import 'package:finance_app/data/model/addData.dart';
+import 'package:finance_app/data/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  var history;
+  final box = Hive.box<AddData>('data');
+  final List<String> day = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: SizedBox(height: 320, child: _head()),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Transaction History",
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
-                    Text(
-                      "See all",
-                      style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
-                    )
-                  ],
+        child: ValueListenableBuilder(
+          valueListenable: box.listenable(),
+          builder: (context, value, child) {
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 320, child: _head()),
                 ),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.asset(
-                        'assets/images/${geter()[index].image!}',
-                        height: 35,
-                      ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Transaction History",
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "See all",
+                          style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey),
+                        )
+                      ],
                     ),
-                    title: Text(
-                      geter()[index].name!,
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
-                    subtitle: Text(
-                      geter()[index].time!,
-                      style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey),
-                    ),
-                    trailing: Text(
-                      geter()[index].fee!,
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: geter()[index].buy! ? Colors.red : Colors.green,
-                      ),
-                    ),
-                  );
-                },
-                childCount: geter().length,
-              ),
-            )
-          ],
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      history = box.values.toList()[index];
+                      return getList(history, index);
+                    },
+                    childCount: box.length,
+                  ),
+                )
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getList(AddData history, int index) {
+    return Dismissible(
+        key: UniqueKey(),
+        onDismissed: (direction) {
+          history.delete();
+        },
+        child: get(index, history));
+  }
+
+  ListTile get(int index, AddData history) {
+    return ListTile(
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Image.asset(
+          'assets/images/${history.name}.png',
+          height: 35,
+        ),
+      ),
+      title: Text(
+        history.name,
+        style: GoogleFonts.poppins(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: const Color.fromARGB(255, 0, 0, 0),
+        ),
+      ),
+      subtitle: Text(
+        '${day[history.dateTime.weekday - 1]} ${history.dateTime.day}-${history.dateTime.month}-${history.dateTime.year}',
+        style: GoogleFonts.poppins(
+            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.grey),
+      ),
+      trailing: Text(
+        '₹ ${history.amount}',
+        style: GoogleFonts.poppins(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: history.iande == 'Income' ? Colors.green : Colors.red,
         ),
       ),
     );
@@ -112,7 +149,6 @@ class Home extends StatelessWidget {
                       borderRadius: BorderRadius.circular(7),
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        // color: Color.fromARGB(255, 92, 181, 175),
                         child: const Icon(
                           Icons.notifications,
                           size: 30,
@@ -187,7 +223,7 @@ class Home extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "₹ 32,568",
+                        "\₹ ${total()}",
                         style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -259,18 +295,18 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "₹ 1,668",
+                        "\+ ₹ ${income()}",
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                            color: Colors.green),
                       ),
                       Text(
-                        "₹ 2,028",
+                        "\- ₹ ${expenses()}",
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                            color: Colors.red),
                       ),
                     ],
                   ),

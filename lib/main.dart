@@ -1,9 +1,12 @@
-import 'package:finance_app/screens/Home.dart';
-import 'package:finance_app/screens/Statistics.dart';
+import 'package:finance_app/data/model/addData.dart';
 import 'package:finance_app/widgets/bnb.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(AdddataAdapter());
+  await Hive.openBox<AddData>('data');
   runApp(const MyApp());
 }
 
