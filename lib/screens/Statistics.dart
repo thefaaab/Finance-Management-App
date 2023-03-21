@@ -3,7 +3,6 @@ import 'package:finance_app/data/utility.dart';
 import 'package:finance_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:finance_app/data/top.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -130,7 +129,7 @@ class _StatisticsState extends State<Statistics> {
               ),
               const SizedBox(height: 30),
               Chart(
-                index2: indexColor,
+                indexx: indexColor,
               ),
               const SizedBox(height: 30),
               Padding(

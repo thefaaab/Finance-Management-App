@@ -295,14 +295,14 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "\+ ₹ ${income()}",
+                        "+ ₹ ${income()}",
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.green),
                       ),
                       Text(
-                        "\- ₹ ${expenses()}",
+                        "- ₹ ${expenses()}",
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
