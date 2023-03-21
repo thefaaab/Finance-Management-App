@@ -1,21 +1,14 @@
-# finance_app
+# Finance Management App
 
-A new Flutter project.
+## Features
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- This App allows you to manage your expenses.
+- Allows to add/remove expense and income.
 
 
 ## Screenshots
 
-<img src="https://github.com/thefaaab/finance_app/blob/master/screenshots/screenshot_1.png" width="300">
+<img src="https://user-images.githubusercontent.com/126548231/226553438-4694c7da-c94f-41dd-88b0-513433b4d1aa.png" width="300">
+<img src="https://user-images.githubusercontent.com/126548231/226553855-dacd93a2-9ecb-429f-87a1-1b68ad682ac0.png" width="300">
+
+
